@@ -3,8 +3,10 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class PackedWeightProductTest {
-    PackedWeightProduct product = new PackedWeightProduct(new WeightProduct("Product", "Something product"),
-            1000.0, new ProductPackaging("Puck", 10.0));
+    ProductPackaging productPackaging = new ProductPackaging("Puck", 10.0);
+    WeightProduct weightProduct = new WeightProduct("Product", "Something product");
+    PackedWeightProduct product = new PackedWeightProduct(weightProduct,
+            1000.0, productPackaging);
 
     @Test
     public void testGetNetWeight() {
@@ -14,5 +16,12 @@ public class PackedWeightProductTest {
     @Test
     public void testGetGrossWeight() {
         assertEquals(0, Double.compare(1010.0, product.getGrossWeight()));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetNetWeightFalse() {
+        PackedWeightProduct product = new PackedWeightProduct(weightProduct,
+                -1000.0, productPackaging);
+
     }
 }
