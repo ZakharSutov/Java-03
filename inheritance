@@ -1,0 +1,15 @@
+Product -> WeightProduct
+        -> PieceProduct
+
+PackedProduct -> PackedWeightProduct
+              -> PackedPieceProduct
+
+Filter -> BeginStringFilter
+       -> EndStringFilter
+       -> ContainStringFilter
+
+ProductPackaging
+
+ProductService
+
+BatchProduct

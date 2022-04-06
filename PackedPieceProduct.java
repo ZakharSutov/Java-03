@@ -1,30 +1,31 @@
 import java.util.Objects;
 
-public class PackedPieceProduct extends PackedProduct{
-    private PieceProduct product;
+public class PackedPieceProduct extends PackedProduct {
     private int count;
+    private ProductPackaging productPackaging;
+    private PieceProduct pieceProduct;
 
     public PackedPieceProduct(PieceProduct product, int count, ProductPackaging productPackaging) {
-        super(product.getName(), product.getDescription(), productPackaging);
         if (count < 0) throw new IllegalArgumentException("Negative count!");
         this.count = count;
-        this.product = product;
+        this.productPackaging = productPackaging;
+        this.pieceProduct = product;
     }
 
     public int getCount() {
         return count;
     }
 
-    public ProductPackaging getProduct() {
-        return productPackaging;
-    }
-
     public double getNetWeight() {
-        return count * product.getWeight();
+        return count * pieceProduct.getWeight();
     }
 
     public double getGrossWeight() {
-        return count * (product.getWeight() + productPackaging.getWeight());
+        return count * (pieceProduct.getWeight() + productPackaging.getWeight());
+    }
+
+    public String getName() {
+        return pieceProduct.getName();
     }
 
     @Override
@@ -33,19 +34,19 @@ public class PackedPieceProduct extends PackedProduct{
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         PackedPieceProduct that = (PackedPieceProduct) o;
-        return count == that.count && Objects.equals(product, that.product);
+        return count == that.count && productPackaging.equals(that.productPackaging);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), product, count);
+        return Objects.hash(super.hashCode(), count, productPackaging);
     }
 
     @Override
     public String toString() {
         return "PackedPieceProduct{" +
-                "product=" + product +
-                ", count=" + count +
+                "count=" + count +
+                ", productPackaging=" + productPackaging +
                 '}';
     }
 }
